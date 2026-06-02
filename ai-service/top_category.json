@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Data Analysis, Statistics, and Probability",
+    "skill_id_included": [
+      "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
+      "11", "12", "13", "14", "15", "56"
+    ]
+  },
+  {
+    "title": "Geometry and Spatial Reasoning",
+    "skill_id_included": [
+      "16", "17", "18", "19", "20", "21", "22", "64", "65", "66", 
+      "80"
+    ]
+  },
+  {
+    "title": "Measurement, Area, and Volume",
+    "skill_id_included": [
+      "23", "24", "26", "27", "28", "29", "67", "68", "69", "70", 
+      "71", "72", "73", "74", "75"
+    ]
+  },
+  {
+    "title": "Number Sense, Properties, and Operations",
+    "skill_id_included": [
+      "25", "30", "31", "32", "33", "34", "35", "36", "37", "38", 
+      "39", "40", "41", "42", "44", "45", "50", "51", "52", "53", 
+      "54", "57", "59", "60", "61", "62", "63", "76", "77", "81"
+    ]
+  },
+  {
+    "title": "Ratios, Proportions, and Percentages",
+    "skill_id_included": [
+      "43", "46", "47", "48", "49"
+    ]
+  },
+  {
+    "title": "Algebraic Thinking, Equations, and Inequalities",
+    "skill_id_included": [
+      "55", "58", "78", "79", "82", "83", "84", "85", "86", "87", 
+      "88", "89"
+    ]
+  },
+  {
+    "title": "Miscellaneous / Other",
+    "skill_id_included": [
+      "0"
+    ]
+  }
+]
