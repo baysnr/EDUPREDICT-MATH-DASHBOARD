@@ -6,7 +6,7 @@
 
 EduPredictMath Dashboard adalah aplikasi berbasis Streamlit yang digunakan untuk melakukan eksplorasi data, monitoring performa siswa, dan demonstrasi prediksi Knowledge Tracing menggunakan model Deep Learning.
 
-Dashboard ini merupakan frontend analitik dari proyek EduPredictMath dan tidak menjalankan model AI secara langsung. Seluruh proses inferensi dilakukan melalui AI Service berbasis FastAPI yang menyediakan endpoint prediksi.
+Dashboard ini merupakan frontend analitik dari proyek EduPredictMath. Proses inferensi model dilakukan melalui API yang telah dideploy secara online menggunakan Hugging Face Spaces, sehingga pengguna tidak perlu menjalankan AI Service secara lokal.
 
 ---
 
@@ -14,7 +14,7 @@ Dashboard ini merupakan frontend analitik dari proyek EduPredictMath dan tidak m
 
 ### 1. EDA & Model Exploration
 
-Halaman ini digunakan untuk mengeksplorasi karakteristik dataset dan perilaku belajar siswa.
+Halaman eksplorasi data untuk memahami karakteristik dataset dan perilaku belajar siswa.
 
 Fitur:
 * Dataset Overview
@@ -23,11 +23,9 @@ Fitur:
 * Easiest Concepts Analysis
 * Business Insights
 
----
-
 ### 2. Class Student Monitoring
 
-Halaman monitoring siswa yang mensimulasikan dashboard guru.
+Dashboard monitoring siswa yang dirancang untuk kebutuhan guru dan pengajar.
 
 Fitur:
 * Student Accuracy
@@ -36,17 +34,14 @@ Fitur:
 * Skill Performance
 * Recent Learning History
 
----
-
 ### 3. DKT Playground
 
-Halaman demonstrasi model Deep Knowledge Tracing.
+Halaman interaktif untuk menguji model Deep Knowledge Tracing.
 
 Fitur:
 * Dataset History Prediction
 * Manual Quiz Simulation
-* CSV Upload Prediction
-* Category Mastery Visualization
+* Category Mastery Prediction
 * AI Explanation
 
 ---
@@ -55,20 +50,15 @@ Fitur:
 
 ```text
 User
- │
- ▼
+  ↓
 Streamlit Dashboard
- │
- ▼
+  ↓
 utils/dkt_api.py
- │
- ▼
-AI Service (FastAPI)
- │
- ▼
-DKT Model
- │
- ▼
+  ↓
+Hugging Face DKT API
+  ↓
+Deep Knowledge Tracing Model
+  ↓
 Prediction Result
 ```
 
@@ -80,6 +70,7 @@ Prediction Result
 streamlit-dashboard/
 │
 ├── app.py
+├── requirements.txt
 │
 ├── pages/
 │   ├── 1_EDA_Model_Exploration.py
@@ -92,7 +83,6 @@ streamlit-dashboard/
 │   ├── charts.py
 │   └── dkt_api.py
 │
-├── requirements.txt
 └── README.md
 ```
 
@@ -100,61 +90,20 @@ streamlit-dashboard/
 
 ## Menjalankan Dashboard
 
-### 1. Install Dependency
-
-Masuk ke folder dashboard:
+### 1. Clone Repository
 
 ```bash
+git clone <repository-url>
 cd streamlit-dashboard
 ```
 
-Install dependency:
+### 2. Install Dependency
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### 2. Jalankan AI Service
-
-Sebelum menjalankan dashboard, AI Service harus aktif terlebih dahulu.
-
-Masuk ke folder AI Service:
-
-```bash
-cd ../ai-service
-```
-
-Jalankan FastAPI:
-
-```bash
-uvicorn inference_api:app --host 0.0.0.0 --port 8000
-```
-
-atau
-
-```bash
-python inference_api.py
-```
-
-Jika berhasil, API dapat diakses melalui:
-
-```text
-http://localhost:8000
-```
-
----
-
 ### 3. Jalankan Dashboard
-
-Kembali ke folder dashboard:
-
-```bash
-cd ../streamlit-dashboard
-```
-
-Jalankan Streamlit:
 
 ```bash
 streamlit run app.py
@@ -168,34 +117,61 @@ http://localhost:8501
 
 ---
 
+## Konfigurasi API
+
+Dashboard menggunakan API publik:
+
+```text
+https://edupredictmath-edupredict-dkt-api.hf.space
+```
+
+Pengaturan endpoint terdapat pada:
+
+```text
+utils/dkt_api.py
+```
+
+Contoh:
+
+```python
+BASE_URL = "https://edupredictmath-edupredict-dkt-api.hf.space"
+PREDICT_URL = f"{BASE_URL}/predict"
+```
+
+---
+
 ## Sumber Data
 
-Dataset tidak disimpan dalam repository GitHub.
+Dataset tidak disimpan di repository GitHub.
 
-Data dimuat melalui Google Drive menggunakan utilitas:
+Data dimuat menggunakan utilitas:
 
 ```text
 utils/load_data.py
 ```
 
-Pastikan URL dataset yang digunakan masih aktif dan dapat diakses publik.
+Pastikan sumber dataset yang digunakan masih dapat diakses.
 
 ---
 
-## Catatan
+## Troubleshooting
 
-Jika halaman DKT Playground menampilkan:
+### AI Service Offline
 
-```text
-AI Service Offline
-```
+Periksa:
 
-maka periksa:
+* URL API pada `utils/dkt_api.py`
+* Endpoint Hugging Face sedang aktif
+* Koneksi internet tersedia
+* Health check API berhasil
 
-* AI Service sudah berjalan
-* URL API pada `utils/dkt_api.py` benar
-* Port 8000 tidak digunakan aplikasi lain
-* Model berhasil dimuat oleh AI Service
+### Prediction Failed
+
+Periksa:
+
+* Format data input
+* Struktur payload yang dikirim ke API
+* Log aplikasi Streamlit
 
 ---
 
@@ -203,9 +179,9 @@ maka periksa:
 
 ## Description
 
-EduPredictMath Dashboard is a Streamlit-based application designed for educational analytics, student monitoring, and Knowledge Tracing prediction demonstrations using Deep Learning models.
+EduPredictMath Dashboard is a Streamlit-based application for educational analytics, student monitoring, and Deep Knowledge Tracing prediction demonstrations.
 
-This dashboard acts as the frontend layer of the EduPredictMath project and does not execute AI models directly. All predictions are performed through a FastAPI-based AI Service.
+The dashboard acts as the frontend of the EduPredictMath project. Model inference is performed through a publicly deployed API hosted on Hugging Face Spaces, so users do not need to run the AI service locally.
 
 ---
 
@@ -213,7 +189,7 @@ This dashboard acts as the frontend layer of the EduPredictMath project and does
 
 ### 1. EDA & Model Exploration
 
-Explore dataset characteristics and learning behavior.
+Explore dataset characteristics and student learning behavior.
 
 Features:
 
@@ -223,11 +199,9 @@ Features:
 * Easiest Concepts Analysis
 * Business Insights
 
----
-
 ### 2. Class Student Monitoring
 
-A teacher-oriented student monitoring dashboard.
+Teacher-oriented student monitoring dashboard.
 
 Features:
 
@@ -237,18 +211,15 @@ Features:
 * Skill Performance
 * Recent Learning History
 
----
-
 ### 3. DKT Playground
 
-Interactive Deep Knowledge Tracing demonstration.
+Interactive Deep Knowledge Tracing prediction interface.
 
 Features:
 
 * Dataset History Prediction
 * Manual Quiz Simulation
-* CSV Upload Prediction
-* Category Mastery Visualization
+* Category Mastery Prediction
 * AI Explanation
 
 ---
@@ -257,20 +228,15 @@ Features:
 
 ```text
 User
- │
- ▼
+  ↓
 Streamlit Dashboard
- │
- ▼
+  ↓
 utils/dkt_api.py
- │
- ▼
-AI Service (FastAPI)
- │
- ▼
-DKT Model
- │
- ▼
+  ↓
+Hugging Face DKT API
+  ↓
+Deep Knowledge Tracing Model
+  ↓
 Prediction Result
 ```
 
@@ -295,68 +261,27 @@ streamlit-dashboard/
 │   ├── charts.py
 │   └── dkt_api.py
 │
-└── assets/
+└── README.md
 ```
 
 ---
 
 ## Running the Dashboard
 
-### 1. Install Dependencies
-
-Navigate to the dashboard folder:
+### 1. Clone Repository
 
 ```bash
+git clone <repository-url>
 cd streamlit-dashboard
 ```
 
-Install required packages:
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### 2. Start AI Service
-
-The AI Service must be running before launching the dashboard.
-
-Navigate to the AI Service folder:
-
-```bash
-cd ../ai-service
-```
-
-Run FastAPI:
-
-```bash
-uvicorn inference_api:app --host 0.0.0.0 --port 8000
-```
-
-or
-
-```bash
-python inference_api.py
-```
-
-The API should be available at:
-
-```text
-http://localhost:8000
-```
-
----
-
-### 3. Launch Streamlit Dashboard
-
-Return to the dashboard folder:
-
-```bash
-cd ../streamlit-dashboard
-```
-
-Run Streamlit:
+### 3. Run Streamlit
 
 ```bash
 streamlit run app.py
@@ -370,31 +295,56 @@ http://localhost:8501
 
 ---
 
+## API Configuration
+
+The dashboard uses a publicly deployed API:
+
+```text
+https://edupredictmath-edupredict-dkt-api.hf.space
+```
+
+The endpoint configuration is located in:
+
+```text
+utils/dkt_api.py
+```
+
+Example:
+
+```python
+BASE_URL = "https://edupredictmath-edupredict-dkt-api.hf.space"
+PREDICT_URL = f"{BASE_URL}/predict"
+```
+
+---
+
 ## Data Source
 
 Datasets are not included in the GitHub repository.
 
-Data is loaded through Google Drive using:
+Data loading is handled through:
 
 ```text
 utils/load_data.py
 ```
 
-Make sure the dataset URLs remain publicly accessible.
+Make sure the dataset source remains accessible.
 
 ---
 
-## Notes
+## Troubleshooting
 
-If DKT Playground displays:
+### AI Service Offline
 
-```text
-AI Service Offline
-```
+Check:
+* API URL configuration
+* Hugging Face Space availability
+* Internet connection
+* API health check status
 
-please verify:
+### Prediction Failed
 
-* AI Service is running
-* API URL in `utils/dkt_api.py` is correct
-* Port 8000 is available
-* The model has been loaded successfully by the AI Service
+Check:
+* Input data format
+* API payload structure
+* Streamlit application logs
