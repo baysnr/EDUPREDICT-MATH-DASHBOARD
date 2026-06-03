@@ -1,17 +1,9 @@
 import requests
 import pandas as pd
 
-API_URL = "http://127.0.0.1:8000"  # Ganti dengan URL API yang sesuai
+API_URL = "https://edupredictmath-edupredict-dkt-api.hf.space/predict"  # Ganti dengan URL API yang sesuai
 TIMEOUT = 60
 DEFAULT_RESPONSE_TIME = 10000
-
-def health_check():
-    """Memastikan endpoint API aktif sebelum melakukan request berat."""
-    try:
-        response = requests.get(f"{API_URL}/docs", timeout=5)
-        return response.status_code == 200
-    except Exception:
-        return False
 
 def build_student_history(df):
     """Mentransformasi DataFrame siswa ke format payload JSON untuk API."""
@@ -31,7 +23,7 @@ def predict(student_history, personal_preference="education"):
         "student_history": student_history,
         "personal_preference": personal_preference
     }
-    response = requests.post( f"{API_URL}/predict", json=payload, timeout=TIMEOUT)
+    response = requests.post(API_URL, json=payload, timeout=TIMEOUT)
     response.raise_for_status()
     return response.json()
 
