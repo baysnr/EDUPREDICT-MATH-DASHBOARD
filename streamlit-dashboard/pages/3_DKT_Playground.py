@@ -15,12 +15,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# API Status Banners
-if health_check():
-    st.success("🟢 AI Service Connected")
-else:
-    st.error("🔴 AI Service Offline")
-    
 st.title("🤖 DKT Playground")
 st.markdown(
     "Interact directly with the AI Knowledge Tracing engine. "
