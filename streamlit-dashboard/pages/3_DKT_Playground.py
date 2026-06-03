@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.load_data import (load_dataset, get_student_list, get_student_history)
 from utils.charts import create_mastery_chart
-from utils.dkt_api import (
-    predict_from_student_history,
-    predict_from_manual_sequence,
-    health_check
-)
+from utils.dkt_api import (predict_from_student_history, predict_from_manual_sequence)
 
 # PAGE CONFIG
 st.set_page_config(
