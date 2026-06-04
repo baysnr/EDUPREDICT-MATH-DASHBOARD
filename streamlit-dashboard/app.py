@@ -22,7 +22,6 @@ st.markdown(
         color: white;
         text-align: center;
         margin-bottom: 2rem;
-        color: #111827;
     }
     .hero-title {
         font-size: 3rem;
@@ -38,6 +37,7 @@ st.markdown(
         background-color: #f8fafc;
         border: 1px solid #e2e8f0;
         margin-bottom: 1rem;
+        color: #111827;
     }
     </style>
     """,
